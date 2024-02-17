@@ -1,3 +1,2 @@
-require("plugins")
 require("rafaelmdm")
-print("hello")
+require("plugins")
