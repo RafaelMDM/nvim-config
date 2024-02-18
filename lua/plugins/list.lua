@@ -18,8 +18,10 @@ return {
 	{'L3MON4D3/LuaSnip'},
 
 	{'nvim-treesitter/playground'},
-	{'folke/tokyonight.nvim'},
 	{'mbbill/undotree'},
 	{'tpope/vim-fugitive'},
 	{'theprimeagen/harpoon'},
+
+    {'folke/tokyonight.nvim'},
+    {'Shatur/neovim-ayu'},
 }
