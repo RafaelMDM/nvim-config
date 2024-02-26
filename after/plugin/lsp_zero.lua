@@ -39,7 +39,8 @@ lsp_zero.format_on_save({
     servers = {
         ['rust_analyzer'] = { 'rust' },
         ['tsserver'] = { 'javascript', 'typescript' },
-    }
+        ['gopls'] = { 'go' },
+    },
 })
 
 cmp.setup({
