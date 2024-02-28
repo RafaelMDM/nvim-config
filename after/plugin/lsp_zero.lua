@@ -49,6 +49,7 @@ cmp.setup({
         { name = 'buffer' },
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
+        { name = 'cmp_tabnine' },
     },
     mapping = cmp.mapping.preset.insert({
         ['<CR>'] = cmp.mapping.confirm({ select = true }),
