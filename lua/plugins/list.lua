@@ -23,6 +23,13 @@ return {
         build = './install.sh',
         dependencies = 'hrsh7th/nvim-cmp',
     },
+    {
+        'saecki/crates.nvim',
+        tag = 'stable',
+        config = function()
+            require('crates').setup()
+        end,
+    },
 
     { 'nvim-treesitter/playground' },
     { 'mbbill/undotree' },
