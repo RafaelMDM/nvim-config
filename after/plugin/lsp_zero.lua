@@ -68,5 +68,16 @@ require('mason-lspconfig').setup({
     ensure_installed = {},
     handlers = {
         lsp_zero.default_setup,
+        wgsl_analyzer = function()
+            local lspconfig = require('lspconfig')
+            lspconfig.wgsl_analyzer.setup()
+        end
     },
+})
+
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+    pattern = "*.wgsl",
+    callback = function()
+        vim.bo.filetype = "wgsl"
+    end,
 })
