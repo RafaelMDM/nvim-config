@@ -40,6 +40,7 @@ lsp_zero.format_on_save({
         ['rust_analyzer'] = { 'rust' },
         ['tsserver'] = { 'javascript', 'typescript' },
         ['gopls'] = { 'go' },
+        ['clangd'] = { 'cpp' },
     },
 })
 
@@ -61,23 +62,28 @@ cmp.setup({
     formatting = cmp_format,
 })
 
+vim.filetype.add({ extension = { templ = "templ" } })
+
 -- to learn how to use mason.nvim with lsp-zero
 -- read this: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guide/integrate-with-mason-nvim.md
 require('mason').setup({})
 require('mason-lspconfig').setup({
-    ensure_installed = {},
+    ensure_installed = {
+        'tsserver',
+        'rust_analyzer',
+        'gopls',
+        'clangd',
+        'wgsl_analyzer',
+        'lua_ls',
+        'html',
+        'htmx',
+    },
     handlers = {
         lsp_zero.default_setup,
         wgsl_analyzer = function()
             local lspconfig = require('lspconfig')
             lspconfig.wgsl_analyzer.setup()
-        end
+        end,
     },
 })
 
-vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-    pattern = "*.wgsl",
-    callback = function()
-        vim.bo.filetype = "wgsl"
-    end,
-})
