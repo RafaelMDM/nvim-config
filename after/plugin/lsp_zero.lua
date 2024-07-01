@@ -21,6 +21,23 @@ lsp_zero.on_attach(function(client, bufnr)
     vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 
+    if client.name == "eslint" then
+        vim.keymap.set("n", "<leader>ff", '<cmd>silent !yarn prettier --write %<CR>', opts)
+
+        local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
+        local event = "BufWritePost"
+        vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
+        vim.api.nvim_create_autocmd(event, {
+            buffer = bufnr,
+            group = group,
+            callback = function()
+                vim.cmd(":silent !yarn prettier --write %")
+                vim.cmd(":TSLspOrganizeSync")
+            end,
+            desc = "[lsp] run prettier on save",
+        })
+    end
+
     lsp_zero.default_keymaps({ buffer = bufnr })
 end)
 
@@ -38,7 +55,6 @@ lsp_zero.format_on_save({
     },
     servers = {
         ['rust_analyzer'] = { 'rust' },
-        ['tsserver'] = { 'javascript', 'typescript' },
         ['gopls'] = { 'go' },
         ['clangd'] = { 'cpp' },
     },
@@ -70,6 +86,7 @@ require('mason').setup({})
 require('mason-lspconfig').setup({
     ensure_installed = {
         'tsserver',
+        'eslint',
         'rust_analyzer',
         'gopls',
         'clangd',
@@ -86,4 +103,3 @@ require('mason-lspconfig').setup({
         end,
     },
 })
-
