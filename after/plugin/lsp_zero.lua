@@ -97,6 +97,49 @@ require('mason-lspconfig').setup({
     },
     handlers = {
         lsp_zero.default_setup,
+        rust_analyzer = function()
+            local rt = require("rust-tools")
+            rt.setup({
+                server = {
+                    on_attach = function(_, bufnr)
+                        vim.keymap.set("n", "K", rt.hover_actions.hover_actions, { buffer = bufnr })
+                        vim.keymap.set("n", "<leader>ca", rt.code_action_group.code_action_group, { buffer = bufnr })
+                    end,
+                    settings = {
+                        ["rust-analyzer"] = {
+                            cargo = {
+                                allFeatures = true,
+                                loadOutDirsFromCheck = true,
+                                runBuildScripts = true,
+                            },
+                            -- Add clippy lints for Rust.
+                            checkOnSave = {
+                                allFeatures = true,
+                                command = "clippy",
+                                extraArgs = {
+                                    "--",
+                                    "--no-deps",
+                                    "-Dclippy::correctness",
+                                    "-Dclippy::complexity",
+                                    "-Wclippy::perf",
+                                    "-Wclippy::pedantic",
+                                },
+                            },
+                            procMacro = {
+                                enable = true,
+                                ignored = {
+                                    ["async-trait"] = { "async_trait" },
+                                    ["napi-derive"] = { "napi" },
+                                    ["async-recursion"] = { "async_recursion" },
+                                },
+                            },
+                        },
+                    },
+                },
+            })
+
+            rt.inlay_hints.enable()
+        end,
         wgsl_analyzer = function()
             local lspconfig = require('lspconfig')
             lspconfig.wgsl_analyzer.setup()

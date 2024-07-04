@@ -16,6 +16,7 @@ return {
     { 'neovim/nvim-lspconfig' },
     { 'hrsh7th/cmp-nvim-lsp' },
     { 'hrsh7th/nvim-cmp' },
+    { 'simrat39/rust-tools.nvim' },
     { 'jose-elias-alvarez/nvim-lsp-ts-utils' },
     { 'L3MON4D3/LuaSnip',                 dependencies = { 'rafamadriz/friendly-snippets', 'honza/vim-snippets' } },
     { 'saadparwaiz1/cmp_luasnip' },
