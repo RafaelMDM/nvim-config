@@ -78,6 +78,7 @@ cmp.setup({
     formatting = cmp_format,
 })
 
+vim.filetype.add({ extension = { html = "html" } })
 vim.filetype.add({ extension = { templ = "templ" } })
 
 -- to learn how to use mason.nvim with lsp-zero
@@ -142,7 +143,7 @@ require('mason-lspconfig').setup({
         end,
         wgsl_analyzer = function()
             local lspconfig = require('lspconfig')
-            lspconfig.wgsl_analyzer.setup()
+            lspconfig.wgsl_analyzer.setup({})
         end,
     },
 })
