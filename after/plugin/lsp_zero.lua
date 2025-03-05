@@ -70,7 +70,7 @@ cmp.setup({
     },
     mapping = cmp.mapping.preset.insert({
         ['<CR>'] = cmp.mapping.confirm({ select = true }),
-        ['<Tab>'] = cmp_action.luasnip_supertab(),
+        --['<Tab>'] = cmp_action.luasnip_supertab(),
         ['<S-Tab>'] = cmp_action.luasnip_shift_supertab(),
         ['<C-f>'] = cmp_action.luasnip_jump_forward(),
         ['<C-b>'] = cmp_action.luasnip_jump_backward(),
@@ -80,13 +80,14 @@ cmp.setup({
 
 vim.filetype.add({ extension = { html = "html" } })
 vim.filetype.add({ extension = { templ = "templ" } })
+vim.filetype.add({ extension = { sql = "sql" } })
 
 -- to learn how to use mason.nvim with lsp-zero
 -- read this: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guide/integrate-with-mason-nvim.md
 require('mason').setup({})
 require('mason-lspconfig').setup({
     ensure_installed = {
-        'tsserver',
+        'ts_ls',
         'eslint',
         'rust_analyzer',
         'gopls',
@@ -124,6 +125,7 @@ require('mason-lspconfig').setup({
                                     "-Dclippy::complexity",
                                     "-Wclippy::perf",
                                     "-Wclippy::pedantic",
+                                    "-Wclippy::cargo",
                                 },
                             },
                             procMacro = {
@@ -145,5 +147,23 @@ require('mason-lspconfig').setup({
             local lspconfig = require('lspconfig')
             lspconfig.wgsl_analyzer.setup({})
         end,
+        sqls = function()
+            local lspconfig = require('lspconfig')
+            lspconfig.sqls.setup{
+                on_attach = function(client, bufnr)
+                    require('sqls').on_attach(client, bufnr)
+                end,
+                settings = {
+                    sqls = {
+                        connections = {
+                            {
+                                driver = 'postgresql',
+                                dataSourceName = 'host=localhost port=5432 user=postgres dbname=acrux_dev sslmode=disable',
+                            }
+                        }
+                    }
+                }
+            }
+        end
     },
 })
