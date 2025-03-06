@@ -31,7 +31,7 @@ lsp_zero.on_attach(function(client, bufnr)
             buffer = bufnr,
             group = group,
             callback = function()
-                vim.cmd(":silent !yarn prettier --write %")
+                vim.cmd(":silent !npx prettier --write %")
                 vim.cmd(":TSLspOrganizeSync")
             end,
             desc = "[lsp] run prettier on save",
