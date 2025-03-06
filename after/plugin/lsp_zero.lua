@@ -125,7 +125,6 @@ require('mason-lspconfig').setup({
                                     "-Dclippy::complexity",
                                     "-Wclippy::perf",
                                     "-Wclippy::pedantic",
-                                    "-Wclippy::cargo",
                                 },
                             },
                             procMacro = {
