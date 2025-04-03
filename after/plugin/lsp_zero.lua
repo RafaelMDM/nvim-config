@@ -57,6 +57,7 @@ lsp_zero.format_on_save({
         ['rust_analyzer'] = { 'rust' },
         ['gopls'] = { 'go' },
         ['clangd'] = { 'cpp' },
+        ['pint'] = { 'php' },
     },
 })
 
@@ -96,6 +97,7 @@ require('mason-lspconfig').setup({
         'lua_ls',
         'html',
         'htmx',
+        'intelephense',
     },
     handlers = {
         lsp_zero.default_setup,
