@@ -5,6 +5,26 @@ local cmp_format = require('lsp-zero').cmp_format()
 
 require("luasnip.loaders.from_vscode").lazy_load()
 
+local function set_format_on_save(command, bufnr, organize)
+    local opts = { buffer = bufnr }
+    vim.keymap.set("n", "<leader>ff", "<cmd>silent !" .. command .. "<CR>", opts)
+
+    local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
+    local event = "BufWritePost"
+    vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
+    vim.api.nvim_create_autocmd(event, {
+        buffer = bufnr,
+        group = group,
+        callback = function()
+            vim.cmd(":silent !" .. command)
+            if organize then
+                vim.cmd(":TSLspOrganizeSync")
+            end
+        end,
+        desc = "[lsp] run prettier on save",
+    })
+end
+
 lsp_zero.on_attach(function(client, bufnr)
     -- see :help lsp-zero-keybindings
     -- to learn the available actions
@@ -22,20 +42,11 @@ lsp_zero.on_attach(function(client, bufnr)
     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 
     if client.name == "eslint" then
-        vim.keymap.set("n", "<leader>ff", '<cmd>silent !yarn prettier --write %<CR>', opts)
+        set_format_on_save("npx prettier --write %", bufnr, true)
+    end
 
-        local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
-        local event = "BufWritePost"
-        vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
-        vim.api.nvim_create_autocmd(event, {
-            buffer = bufnr,
-            group = group,
-            callback = function()
-                vim.cmd(":silent !npx prettier --write %")
-                vim.cmd(":TSLspOrganizeSync")
-            end,
-            desc = "[lsp] run prettier on save",
-        })
+    if client.name == "intelephense" then
+        set_format_on_save("./vendor/bin/pint %", bufnr, false)
     end
 
     lsp_zero.default_keymaps({ buffer = bufnr })
@@ -150,7 +161,7 @@ require('mason-lspconfig').setup({
         end,
         sqls = function()
             local lspconfig = require('lspconfig')
-            lspconfig.sqls.setup{
+            lspconfig.sqls.setup {
                 on_attach = function(client, bufnr)
                     require('sqls').on_attach(client, bufnr)
                 end,
