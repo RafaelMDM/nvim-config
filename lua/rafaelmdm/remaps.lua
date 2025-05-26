@@ -20,6 +20,7 @@ vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
 
 vim.keymap.set("i", "<C-c>", "<Esc>")
 vim.keymap.set("i", "<C-d>", "<C-o>A;<C-o>o")
+vim.keymap.set("i", "<C-f>", "<C-o>A,<C-o>o")
 
 vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
@@ -40,5 +41,5 @@ vim.keymap.set("n", "<leader><leader>", function()
 end)
 
 vim.keymap.set("n", "<leader>ige", "oif err != nil {<CR>}<C-c>Oreturn err<C-c>");
-vim.keymap.set("i", "<C-A>", "->");
-vim.keymap.set("i", "<C-S>", "=>");
+vim.keymap.set("i", "<C-A>", "<C-o>A->");
+vim.keymap.set("i", "<C-S>", "<C-o>A=>");

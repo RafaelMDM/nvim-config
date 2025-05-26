@@ -69,6 +69,7 @@ return {
     { 'mbbill/undotree' },
     { 'tpope/vim-fugitive' },
     { 'theprimeagen/harpoon' },
+    { 'm4xshen/autoclose.nvim' },
 
     --    { 'folke/tokyonight.nvim' },
     { 'Shatur/neovim-ayu' },
