@@ -42,6 +42,7 @@ lsp_zero.on_attach(function(client, bufnr)
     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 
     if client.name == "eslint" then
+        print(client)
         set_format_on_save("npx prettier --write %", bufnr, true)
     end
 
@@ -134,10 +135,6 @@ require('mason-lspconfig').setup({
                                 extraArgs = {
                                     "--",
                                     "--no-deps",
-                                    "-Dclippy::correctness",
-                                    "-Dclippy::complexity",
-                                    "-Wclippy::perf",
-                                    "-Wclippy::pedantic",
                                 },
                             },
                             procMacro = {
