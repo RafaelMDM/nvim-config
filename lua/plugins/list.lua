@@ -70,6 +70,7 @@ return {
     { 'tpope/vim-fugitive' },
     { 'theprimeagen/harpoon' },
     { 'm4xshen/autoclose.nvim' },
+    { 'christoomey/vim-tmux-navigator' },
 
     --    { 'folke/tokyonight.nvim' },
     { 'Shatur/neovim-ayu' },
