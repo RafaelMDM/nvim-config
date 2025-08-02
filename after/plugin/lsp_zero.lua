@@ -108,7 +108,6 @@ require('mason-lspconfig').setup({
         'wgsl_analyzer',
         'lua_ls',
         'html',
-        'htmx',
         'intelephense',
     },
     handlers = {
